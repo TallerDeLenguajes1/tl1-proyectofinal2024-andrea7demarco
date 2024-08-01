@@ -3,27 +3,15 @@ using EspacioPersonaje;
 public class FabricaDePersonajes
     {
 
-        private List<string>? nombresApi;
+    private List<string> nombresApi ;
+    private List<string> tiposApi;
+    public FabricaDePersonajes()
+    {
+            nombresApi = ManejoDeArchivos.GetNombres().Result;
+            tiposApi = ManejoDeArchivos.GetTipos().Result;
+    }
 
-        public FabricaDePersonajes()
-        {
-            nombresApi = ManejoDeArchivos.GetNombre().Result;
-        }
-        Dictionary<string, int> tipos = new Dictionary<string, int>(){
-            ["Johnny Cage"] = 0,
-            ["Sonya Blade"] = 0,
-            ["Quan Chi"] = 1,
-            ["Shang Tsung"] = 1,
-            ["Raiden"] = 2,
-            ["Sub-Zero"] = 2,
-            ["Baraka"] = 3,
-            ["Mileena"] = 3,
-            ["Goro"] = 4,  
-            ["Cyrax"] = 4
-
-        };
      
-
     public int obtRandom(int a, int b)
     {
         Random random = new Random();
@@ -36,7 +24,15 @@ public class FabricaDePersonajes
         var Hoy = DateTime.Now;
         return (int)((Hoy.Subtract(fechaNacimiento).TotalDays)/365);
     }
-
+/*controlar 
+    private T ObtenerElementoAleatorio<T>(List<T> lista)
+    {
+        if (lista == null || lista.Count == 0)
+            return default(T);
+        var randomIndex = obtRandom(0, lista.Count);
+        return lista[randomIndex];
+    }
+*/
     public List<Personaje> CrearPersonajeCaract()
     {
         List<Personaje> personajes = new List<Personaje>();
@@ -53,7 +49,7 @@ public class FabricaDePersonajes
             NuevoPersonaje.Datos.Fecha_nac = new DateTime(obtRandom(1992,2000) , obtRandom(1,12), obtRandom(1,31));
             NuevoPersonaje.Datos.Edad = CalcEdad(NuevoPersonaje.Datos.Fecha_nac);
             NuevoPersonaje.Datos.Nombre = nombresApi[ i % nombresApi.Count];
-            NuevoPersonaje.Datos.Tipo = tipos.GetValueOrDefault(NuevoPersonaje.Datos.Nombre);
+            NuevoPersonaje.Datos.Tipo = tiposApi[i % tiposApi.Count];
 
             personajes.Add(NuevoPersonaje);
         }

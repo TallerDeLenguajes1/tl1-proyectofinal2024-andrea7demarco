@@ -7,7 +7,7 @@ namespace EspacioPersonaje
         private DateTime fecha_nac;
         private int edad;
 
-        private int tipo;
+        private string? tipo;
 
         public string? Nombre 
         { get => nombre; set => nombre = value;}
@@ -21,7 +21,7 @@ namespace EspacioPersonaje
         public int Edad 
         {get => edad; set => edad = value;}
 
-        public int Tipo
+        public string? Tipo
         {get => tipo; set => tipo = value;}
     }
 

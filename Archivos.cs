@@ -8,35 +8,32 @@ public class ManejoDeArchivos
 {
     private static readonly HttpClient client = new HttpClient();
 
-    public static async Task<List<string>> GetNombre()
+    public static async Task<List<string>> GetNombres()
     {
         var url = "https://rickandmortyapi.com/api/character";
-        HttpResponseMessage response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        string responseBody = await response.Content.ReadAsStringAsync();
-        //Lista nombres
-        var listadoNombres = JsonSerializer.Deserialize<RespuestaPersonajes>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        List<string> nombres = new List<string>();
-        
-        if (listadoNombres != null && listadoNombres.Results != null)
-        {
-            foreach (var personaje in listadoNombres.Results)
-            {
-                nombres.Add(personaje.Name);
-            }
-        } 
+        var response = await client.GetStringAsync(url);
+        var listadoPersonajes = JsonSerializer.Deserialize<RespuestaPersonajes>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        //lista apodos
-        return nombres;         
+        return listadoPersonajes?.Results?.ConvertAll(p => p.Name) ?? new List<string>();
+    }
+
+    public static async Task<List<string>> GetTipos()
+    {
+        var url = "https://rickandmortyapi.com/api/character";
+        var response = await client.GetStringAsync(url);
+        var listadoPersonajes = JsonSerializer.Deserialize<RespuestaPersonajes>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return listadoPersonajes?.Results?.ConvertAll(p => p.Species) ?? new List<string>();
     }
 
     public class RespuestaPersonajes
     {
-        public List<PersonajeApi>? Results {get; set;}
+        public List<PersonajeApi> Results { get; set; } = new List<PersonajeApi>();
     }
 
     public class PersonajeApi
     {
-        public string Name {get ;set ;}
+        public string Name { get; set; } = string.Empty;
+        public string Species { get; set; } = string.Empty;
     }
 }

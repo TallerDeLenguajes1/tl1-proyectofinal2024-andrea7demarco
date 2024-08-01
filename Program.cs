@@ -5,7 +5,16 @@ List<Personaje> personajesList;
 
 personajesList = FabricarPj.CrearPersonajeCaract();
 MostrarPersonajes(personajesList);
-//Funciones
+
+
+
+
+
+
+
+
+
+//Funciones mostrar luego las paso a otro .cs
 
 void MostrarPersonajes(List<Personaje> personajes)
 {
@@ -16,6 +25,7 @@ void MostrarPersonajes(List<Personaje> personajes)
         $"Velocidad : {pj.Caracteristicas.Velocidad}\n" +
         $"Nivel : {pj.Caracteristicas.Nivel}\n" +
         $"Fuerza : {pj.Caracteristicas.Fuerza}\n" +
-        $"Salud : {pj.Caracteristicas.Salud}\n");
+        $"Salud : {pj.Caracteristicas.Salud}\n" +
+        $"Edad : {pj.Datos.Edad} \n");
     }
 }
