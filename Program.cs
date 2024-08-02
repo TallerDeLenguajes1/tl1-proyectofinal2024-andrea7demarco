@@ -2,19 +2,17 @@
 
 FabricaDePersonajes FabricarPj = new FabricaDePersonajes();
 List<Personaje> personajesList;
+PersonajesJson json = new PersonajesJson();
 
 personajesList = FabricarPj.CrearPersonajeCaract();
 MostrarPersonajes(personajesList);
+//Funciones mostrar luego las paso a otr .cs
 
 
-
-
-
-
-
-
-
-//Funciones mostrar luego las paso a otro .cs
+if(!json.Existe("Personajes.json") || new FileInfo("Personajes.json").Length == 0){  //si no existe o está vacío --corregido
+    personajesList = FabricarPj.CrearPersonajeCaract();
+    json.GuardarPersonajes(personajesList, "Personajes");
+}
 
 void MostrarPersonajes(List<Personaje> personajes)
 {
