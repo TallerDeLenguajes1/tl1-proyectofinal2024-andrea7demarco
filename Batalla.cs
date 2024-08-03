@@ -92,7 +92,8 @@ private void Ganador(EspacioPersonaje.Personaje ganador, EspacioPersonaje.Person
 
 public void MostrarDatos(EspacioPersonaje.Personaje pj1, EspacioPersonaje.Personaje pj2){
 
-    Console.WriteLine($"El nombre del peronaje es Personaje 1: {pj1.Datos.Nombre} ------- Personaje 2: {pj2.Datos.Nombre}\n" +
+    Console.WriteLine(
+            $"El nombre del peronaje es Personaje 1: {pj1.Datos.Nombre} ------- Personaje 2: {pj2.Datos.Nombre}\n" +
             $"El tipo de personaje es Personaje 1: {pj1.Datos.Tipo} ------- Personaje 2: {pj2.Datos.Tipo}\n" + 
             $"La velocidad del peronaje es Personaje 1: {pj1.Caracteristicas.Velocidad} ------- Personaje 2: {pj2.Caracteristicas.Velocidad}\n" +
             $"El nivel del personaje es Personaje 1: {pj1.Caracteristicas.Nivel} ------- Personaje 2: {pj2.Caracteristicas.Nivel}\n"+

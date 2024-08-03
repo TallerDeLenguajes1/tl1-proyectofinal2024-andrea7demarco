@@ -1,4 +1,5 @@
-﻿using EspacioPersonaje;
+﻿using System.Runtime.InteropServices;
+using EspacioPersonaje;
 
 FabricaDePersonajes FabricarPj = new FabricaDePersonajes();
 List<Personaje> personajesList;
@@ -6,6 +7,7 @@ PersonajesJson json = new PersonajesJson();
 Batalla pelea = new Batalla();
 
 int? comenzar;
+int? resetear;
 personajesList = FabricarPj.CrearPersonajeCaract();
 MostrarPersonajes(personajesList);
 //Funciones mostrar luego las paso a otr .cs
@@ -18,6 +20,7 @@ if(!json.Existe("Personajes.json") || new FileInfo("Personajes.json").Length == 
 //chequear corregir esos readline
 Console.WriteLine("Comenzar pelea Si[1] - No[0]");
 comenzar = int.Parse(Console.ReadLine());
+
 while(comenzar == 1)
 {
     List<Personaje> listaActualizada = pelea.Pelea(personajesList);
@@ -26,13 +29,24 @@ while(comenzar == 1)
     comenzar = int.Parse(Console.ReadLine());
     Console.Clear();
 }
+// chequear - ubicar bien
+Console.WriteLine("Desea borrar la partida?: Si[1] - No[0]");
+resetear = int.Parse(Console.ReadLine());
+if(resetear == 1)
+{
+    json.BorrarArchivo("Personajes.json");
+} else 
+{
+    Console.WriteLine("Json no eliminado\n");
+}
 
 
 void MostrarPersonajes(List<Personaje> personajes)
-{
+{   Console.WriteLine("PERSONAJES:\n");
     foreach (Personaje pj in personajes)
     {
         Console.WriteLine($"Nombre : {pj.Datos.Nombre}\n" +
+        $"ID: {pj.Datos.ID_seleccion}\n" +
         $"Tipo : {pj.Datos.Tipo}\n" +
         $"Velocidad : {pj.Caracteristicas.Velocidad}\n" +
         $"Nivel : {pj.Caracteristicas.Nivel}\n" +
@@ -41,3 +55,6 @@ void MostrarPersonajes(List<Personaje> personajes)
         $"Edad : {pj.Datos.Edad} \n");
     }
 }
+
+
+

@@ -8,7 +8,7 @@ using EspacioPersonaje;
 public class ManejoDeArchivos
 {
     private static readonly HttpClient client = new HttpClient();
-
+    //esto deberia hacerlo una sola vez, no dos consultas??
     public static async Task<List<string>> GetNombres()
     {
         var url = "https://rickandmortyapi.com/api/character";

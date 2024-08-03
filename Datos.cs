@@ -7,6 +7,9 @@ namespace EspacioPersonaje
         private DateTime fecha_nac;
         private int edad;
 
+        public int id_seleccion;
+
+
         private string? tipo;
 
         public string? Nombre 
@@ -23,6 +26,10 @@ namespace EspacioPersonaje
 
         public string? Tipo
         {get => tipo; set => tipo = value;}
+
+        public int ID_seleccion
+
+        {get => id_seleccion; set => id_seleccion = value;}
     }
 
 }
