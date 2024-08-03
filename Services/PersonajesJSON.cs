@@ -52,11 +52,6 @@ public class PersonajesJson
         if (Existe(nombreArchivo))
         {
             File.Delete(nombreArchivo);
-            Console.WriteLine("El archivo JSON con los personajes ha sido borrado.");
-        }
-        else
-        {
-            Console.WriteLine("El archivo JSON no existe.");
         }
     }
 }

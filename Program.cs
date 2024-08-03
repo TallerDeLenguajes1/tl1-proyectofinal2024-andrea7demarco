@@ -42,7 +42,7 @@ while (comenzar == 1)
 
     try
     {
-        List<Personaje> listaActualizada = pelea.Pelea(personajesList, personajeElegido);
+        List<Personaje> listaActualizada = pelea.IniciarPelea(personajesList, personajeElegido);
         personajesJson.GuardarPersonajes(listaActualizada);
     }
     catch (ArgumentException) // esto obtiene la excepcion cuando no hay mas personajes
@@ -64,6 +64,7 @@ resetear = int.Parse(Console.ReadLine());
 if (resetear == 1)
 {
     personajesJson.BorrarArchivo(ArchivoPersonajes);
+    Console.WriteLine("Los personajes han sido borrados.");
 }
 else
 {
@@ -110,7 +111,7 @@ Personaje ElegirPersonaje()
 
 void InicializarPersonajes()
 {
-    personajesList = FabricarPj.CrearPersonajeCaract();
+    personajesList = FabricarPj.CrearPersonaje();
     personajesJson.GuardarPersonajes(personajesList);
 }
 

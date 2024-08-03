@@ -8,7 +8,7 @@ public class FabricaPersonajesService
         _random = new Random();
     }
     
-    public List<Personaje> CrearPersonajeCaract()
+    public List<Personaje> CrearPersonaje()
     {
         List<Personaje> personajes = [];
         List<PersonajeApi> personajesSeleccionados = PersonajesSeleccionados();
@@ -20,11 +20,11 @@ public class FabricaPersonajesService
             personajes.Add(new()
             {
                 Caracteristicas = {
-                    Destreza = obtRandom(1,6),
-                    Nivel = obtRandom(1,11),
-                    Velocidad = obtRandom(1,11),
-                    Fuerza = obtRandom(1,11),
-                    Armadura = obtRandom(1,11),
+                    Destreza = GenerarRandom(1,6),
+                    Nivel = GenerarRandom(1,11),
+                    Velocidad = GenerarRandom(1,11),
+                    Fuerza = GenerarRandom(1,11),
+                    Armadura = GenerarRandom(1,11),
                     Salud = 100
                 },
                 Datos = {
@@ -32,7 +32,7 @@ public class FabricaPersonajesService
                     Nombre = personaje.Name,
                     Tipo = personaje.Species,
                     Fecha_nac = fechaNacimiento,
-                    Edad = CalcEdad(fechaNacimiento)
+                    Edad = CalcularEdad(fechaNacimiento)
                 }
             });
         }
@@ -40,7 +40,7 @@ public class FabricaPersonajesService
         return personajes;
     }
 
-    public int obtRandom(int a, int b)
+    public int GenerarRandom(int a, int b)
     {
         return _random.Next(a,b);
     }
@@ -59,7 +59,7 @@ public class FabricaPersonajesService
         return personajesAPI.Where(p => numeros.Contains(p.Id)).ToList();
     }
 
-    private static int CalcEdad(DateTime fechaNacimiento)
+    private static int CalcularEdad(DateTime fechaNacimiento)
     {
         var Hoy = DateTime.Now;
         return (int)(Hoy.Subtract(fechaNacimiento).TotalDays/365);
@@ -72,9 +72,9 @@ public class FabricaPersonajesService
             throw new ArgumentException("The start year must be less than or equal to the end year.");
         }
 
-        int year = obtRandom(anioInicio, anioFin + 1);
-        int month = obtRandom(1, 13);
-        int day = obtRandom(1, DateTime.DaysInMonth(year, month) + 1);
+        int year = GenerarRandom(anioInicio, anioFin + 1);
+        int month = GenerarRandom(1, 13);
+        int day = GenerarRandom(1, DateTime.DaysInMonth(year, month) + 1);
 
         return new DateTime(year, month, day);
     }      

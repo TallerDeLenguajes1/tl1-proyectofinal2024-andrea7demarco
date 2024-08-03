@@ -9,7 +9,7 @@ public class Batalla
         fabrica = new FabricaPersonajesService();
     }
 
-    public List<Personaje> Pelea(List<Personaje> personajes, Personaje personajeElegido)
+    public List<Personaje> IniciarPelea(List<Personaje> personajes, Personaje personajeElegido)
     {
         if (personajes == null || personajes.Count < 2)
         {
@@ -57,17 +57,20 @@ public class Batalla
 
     private static void RemoverPerdedor(Personaje perdedor, List<Personaje> personajes)
         => personajes.Remove(perdedor);
+    // {
+    //     return personajes.Remove(perdedor);
+    // }
 
     private Personaje SeleccionarPeleadorAleatorio(List<Personaje> personajes)
     {
         int nroPersonajes = personajes.Count;
-        return personajes[fabrica.obtRandom(0, nroPersonajes)];
+        return personajes[fabrica.GenerarRandom(0, nroPersonajes)];
     }
 
-    private decimal DañoAtaque(Personaje pj, int velocidad)
+    private decimal CalcularDañoAtaque(Personaje pj, int velocidad)
     {
         int ataque = pj.Caracteristicas.Destreza * pj.Caracteristicas.Fuerza * pj.Caracteristicas.Nivel;
-        int efectividad = fabrica.obtRandom(1, 101);
+        int efectividad = fabrica.GenerarRandom(1, 101);
         int defensa = pj.Caracteristicas.Armadura * velocidad;
         int constanteAjuste = 500;
 
@@ -77,12 +80,12 @@ public class Batalla
 
     private void RealizarRonda(ref Personaje peleador1, ref Personaje peleador2, ref int contador)
     {
-        decimal daño1 = DañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad);
+        decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad);
         peleador2.Caracteristicas.Salud = peleador2.Caracteristicas.Salud - daño1 < 0
             ? peleador2.Caracteristicas.Salud = 0
             : peleador2.Caracteristicas.Salud - daño1;
 
-        decimal daño2 = DañoAtaque(peleador2, peleador1.Caracteristicas.Velocidad);
+        decimal daño2 = CalcularDañoAtaque(peleador2, peleador1.Caracteristicas.Velocidad);
         peleador1.Caracteristicas.Salud = peleador1.Caracteristicas.Salud - daño2 < 0
             ? peleador1.Caracteristicas.Salud = 0
             : peleador1.Caracteristicas.Salud - daño2;
