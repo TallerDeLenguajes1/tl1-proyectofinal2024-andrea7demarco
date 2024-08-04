@@ -1,9 +1,8 @@
 using System.Text.Json;
-public class PersonajesJson
+public class PersonajesJsonService
 {
     private const string ArchivoPersonajes = "Data/Personajes.json";
     private const string ArchivoGanador = "Data/Ganador.json";
-
 
     public void GuardarPersonajes(List<Personaje> personaje)
     {
@@ -13,7 +12,7 @@ public class PersonajesJson
         File.WriteAllText(ArchivoPersonajes, json);
     }
 
-    public void GuardarGanador(Personaje ganador)
+    public void GuardarGanador(Ganador ganador)
     {
         //serializo - convierto la lista personajes a una cadena json
         string json = JsonSerializer.Serialize(ganador);
@@ -31,11 +30,11 @@ public class PersonajesJson
         return personajesDeserealizados;
     }
 
-    public Personaje LeerGanador()
+    public Ganador LeerGanador()
     {
         //deserealizo - lee un json y lo pasa a una lista de obj personajes
         string json = File.ReadAllText(ArchivoGanador);
-        Personaje ganadorDeserealizado = JsonSerializer.Deserialize<Personaje>(json) 
+        Ganador ganadorDeserealizado = JsonSerializer.Deserialize<Ganador>(json) 
             ?? throw new Exception("No se pudo leer el archivo JSON");
             
         return ganadorDeserealizado;

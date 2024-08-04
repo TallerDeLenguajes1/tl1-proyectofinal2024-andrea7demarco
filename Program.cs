@@ -1,8 +1,8 @@
 ﻿
 FabricaPersonajesService FabricarPj = new();
 List<Personaje> personajesList;
-PersonajesJson personajesJson = new();
-Batalla pelea = new();
+PersonajesJsonService personajesJson = new();
+BatallaService pelea = new();
 Personaje? personajeElegido = null;
 
 const string ArchivoPersonajes = "Data/Personajes.json";
@@ -12,7 +12,6 @@ int? comenzar;
 int? resetear;
 int personaje_id = 0;
 
-
 if (!personajesJson.Existe(ArchivoPersonajes))
 {
     InicializarPersonajes();
@@ -21,6 +20,9 @@ else
 {
     personajesList = personajesJson.LeerPersonajes();
 }
+
+Console.WriteLine("Escribe tu nombre: \n");
+Usuario.Nombre = Console.ReadLine();
 
 MostrarPersonajes(personajesList);
 //Funciones mostrar luego las paso a otr .cs
@@ -34,7 +36,7 @@ if (personajesJson.Existe(ArchivoGanador))
 
 while (comenzar == 1)
 {
-    if ((personajesJson.Existe(ArchivoGanador) && personajesJson.LeerGanador().Datos.id != personajeElegido?.Datos.id)
+    if ((personajesJson.Existe(ArchivoGanador) && personajesJson.LeerGanador().Personaje.Datos.id != personajeElegido?.Datos.id)
         || personajeElegido == null)
     {
         personajeElegido = ElegirPersonaje();

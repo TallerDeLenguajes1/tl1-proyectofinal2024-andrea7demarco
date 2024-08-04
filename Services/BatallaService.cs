@@ -1,12 +1,12 @@
-public class Batalla
+public class BatallaService
 {
-    private readonly FabricaPersonajesService fabrica;
-    private readonly PersonajesJson json;
+    private readonly FabricaPersonajesService fabricaPersonajes;
+    private readonly PersonajesJsonService personajesJson;
 
-    public Batalla()
+    public BatallaService()
     {
-        json = new PersonajesJson();
-        fabrica = new FabricaPersonajesService();
+        personajesJson = new PersonajesJsonService();
+        fabricaPersonajes = new FabricaPersonajesService();
     }
 
     public List<Personaje> IniciarPelea(List<Personaje> personajes, Personaje personajeElegido)
@@ -36,7 +36,13 @@ public class Batalla
                 AumentarNivelDelGanador(peleador2);
                 RemoverPerdedor(peleador1, personajes);
 
-                json.GuardarGanador(peleador2);
+                Ganador ganador = new()
+                {
+                    Personaje = peleador2,
+                    Nombre = "Computadora",
+                };
+
+                personajesJson.GuardarGanador(ganador);
 
                 return personajes;
             }
@@ -46,7 +52,13 @@ public class Batalla
                 AumentarNivelDelGanador(peleador1);
                 RemoverPerdedor(peleador2, personajes);
 
-                json.GuardarGanador(peleador1);
+                Ganador ganador = new()
+                {
+                    Personaje = peleador1,
+                    Nombre = Usuario.Nombre,
+                };
+
+                personajesJson.GuardarGanador(ganador);
 
                 return personajes;
             }
@@ -64,13 +76,13 @@ public class Batalla
     private Personaje SeleccionarPeleadorAleatorio(List<Personaje> personajes)
     {
         int nroPersonajes = personajes.Count;
-        return personajes[fabrica.GenerarRandom(0, nroPersonajes)];
+        return personajes[fabricaPersonajes.GenerarRandom(0, nroPersonajes)];
     }
 
     private decimal CalcularDañoAtaque(Personaje pj, int velocidad)
     {
         int ataque = pj.Caracteristicas.Destreza * pj.Caracteristicas.Fuerza * pj.Caracteristicas.Nivel;
-        int efectividad = fabrica.GenerarRandom(1, 101);
+        int efectividad = fabricaPersonajes.GenerarRandom(1, 101);
         int defensa = pj.Caracteristicas.Armadura * velocidad;
         int constanteAjuste = 500;
 
