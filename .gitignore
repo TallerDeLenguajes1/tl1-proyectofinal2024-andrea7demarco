@@ -427,4 +427,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudiocode
 
 ## Se ignoran los .json
-.json
+*.json
