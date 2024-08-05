@@ -18,7 +18,7 @@ public class BatallaService
 
         Personaje peleador1 = personajeElegido;
         Personaje peleador2;
-        
+
         //para q no se repitan
         do
         {
@@ -79,7 +79,7 @@ public class BatallaService
         return personajes[fabricaPersonajes.GenerarRandom(0, nroPersonajes)];
     }
 
-    private decimal CalcularDañoAtaque(Personaje pj, int velocidad)
+    private decimal CalcularDañoAtaque(Personaje pj, int velocidad, decimal potenciador = 0)
     {
         int ataque = pj.Caracteristicas.Destreza * pj.Caracteristicas.Fuerza * pj.Caracteristicas.Nivel;
         int efectividad = fabricaPersonajes.GenerarRandom(1, 101);
@@ -87,12 +87,33 @@ public class BatallaService
         int constanteAjuste = 500;
 
         decimal daño = ((ataque * efectividad) - defensa) / constanteAjuste;
-        return daño;
+        return daño * (potenciador + 1);
     }
 
     private void RealizarRonda(ref Personaje peleador1, ref Personaje peleador2, ref int contador)
     {
-        decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad);
+        string? ataque_ingresado;
+        Console.WriteLine($"Ronda Numero {contador++}");
+        MostrarTablaDeCombos(peleador1);
+        Console.WriteLine("Ingresar ATAQUE: ");
+        ataque_ingresado = Console.ReadLine();
+
+        Dictionary<string, decimal> potenciadorAtaques = new()
+        {
+            {peleador1.ComboAtaques.Basico, 0.05m },
+            {peleador1.ComboAtaques.Intermedio, 0.15m },
+            {peleador1.ComboAtaques.Avanzado, 0.30m },
+            {peleador1.ComboAtaques.Fatality, 0.90m }
+        };
+
+        decimal potenciador = 0m;
+
+        if (potenciadorAtaques.TryGetValue(ataque_ingresado, out potenciador))
+        {
+            Console.WriteLine("Coinciden.");
+        }
+
+        decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad, potenciador);
         peleador2.Caracteristicas.Salud = peleador2.Caracteristicas.Salud - daño1 < 0
             ? peleador2.Caracteristicas.Salud = 0
             : peleador2.Caracteristicas.Salud - daño1;
@@ -103,8 +124,6 @@ public class BatallaService
             : peleador1.Caracteristicas.Salud - daño2;
 
         MostrarDatos(peleador1, peleador2);
-
-        Console.WriteLine($"Ronda Numero {contador++}");
         Console.ReadKey();
     }
 
@@ -124,5 +143,19 @@ public class BatallaService
                 $"El nivel del personaje es Personaje 1: {pj1.Caracteristicas.Nivel} ------- Personaje 2: {pj2.Caracteristicas.Nivel}\n" +
                 $"La fuerza del personaje es Personaje 1: {pj1.Caracteristicas.Fuerza} ------- Personaje 2: {pj2.Caracteristicas.Fuerza}\n" +
                 $"La salud del personaje es Personaje 1: {pj1.Caracteristicas.Salud} ------- Personaje 2: {pj2.Caracteristicas.Salud}\n");
+    }
+
+    public void MostrarTablaDeCombos(Personaje pj1)
+    {
+        Console.WriteLine("Esto se mostrara por unos segundos...");
+
+        Console.WriteLine(
+            "TABLA DE JUGADAS:\n" +
+            $"Jugada basica [{pj1.ComboAtaques.Basico}]\n" +
+            $"Jugada intermedia [{pj1.ComboAtaques.Intermedio}]\n" +
+            $"Jugada avanzada [{pj1.ComboAtaques.Avanzado}]\n" +
+            $"Jugada fatality [{pj1.ComboAtaques.Fatality}]\n");
+        Thread.Sleep(3000); // se muestra 3 segs
+        Console.Clear();
     }
 }
