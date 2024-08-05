@@ -92,11 +92,10 @@ public class BatallaService
 
     private void RealizarRonda(ref Personaje peleador1, ref Personaje peleador2, ref int contador)
     {
-        string? ataque_ingresado;
         Console.WriteLine($"Ronda Numero {contador++}");
         MostrarTablaDeCombos(peleador1);
         Console.WriteLine("Ingresar ATAQUE: ");
-        ataque_ingresado = Console.ReadLine();
+        string ataque_ingresado = Console.ReadLine() ?? string.Empty;
 
         Dictionary<string, decimal> potenciadorAtaques = new()
         {
@@ -111,6 +110,8 @@ public class BatallaService
         if (potenciadorAtaques.TryGetValue(ataque_ingresado, out potenciador))
         {
             Console.WriteLine("Coinciden.");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad, potenciador);
@@ -136,13 +137,18 @@ public class BatallaService
 
     private static void MostrarDatos(Personaje pj1, Personaje pj2)
     {
+        // Define el ancho de las columnas
+        int anchoColumna = 30;
+
+        // Usa PadRight para alinear a la izquierda el primer personaje y PadLeft para alinear a la derecha el segundo personaje
         Console.WriteLine(
-                $"El nombre del peronaje es Personaje 1: {pj1.Datos.Nombre} ------- Personaje 2: {pj2.Datos.Nombre}\n" +
-                $"El tipo de personaje es Personaje 1: {pj1.Datos.Tipo} ------- Personaje 2: {pj2.Datos.Tipo}\n" +
-                $"La velocidad del peronaje es Personaje 1: {pj1.Caracteristicas.Velocidad} ------- Personaje 2: {pj2.Caracteristicas.Velocidad}\n" +
-                $"El nivel del personaje es Personaje 1: {pj1.Caracteristicas.Nivel} ------- Personaje 2: {pj2.Caracteristicas.Nivel}\n" +
-                $"La fuerza del personaje es Personaje 1: {pj1.Caracteristicas.Fuerza} ------- Personaje 2: {pj2.Caracteristicas.Fuerza}\n" +
-                $"La salud del personaje es Personaje 1: {pj1.Caracteristicas.Salud} ------- Personaje 2: {pj2.Caracteristicas.Salud}\n");
+            $"{"Atributos".PadRight(anchoColumna)}{"Personaje 1".PadRight(anchoColumna)}{"Personaje 2".PadRight(anchoColumna)}\n" +
+            $"{"Nombre".PadRight(anchoColumna)}{pj1.Datos.Nombre.PadRight(anchoColumna)}{pj2.Datos.Nombre.PadRight(anchoColumna)}\n" +
+            $"{"Tipo".PadRight(anchoColumna)}{pj1.Datos.Tipo.PadRight(anchoColumna)}{pj2.Datos.Tipo.PadRight(anchoColumna)}\n" +
+            $"{"Velocidad".PadRight(anchoColumna)}{pj1.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna)}\n" +
+            $"{"Nivel".PadRight(anchoColumna)}{pj1.Caracteristicas.Nivel.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Nivel.ToString().PadRight(anchoColumna)}\n" +
+            $"{"Fuerza".PadRight(anchoColumna)}{pj1.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna)}\n" +
+            $"{"Salud".PadRight(anchoColumna)}{pj1.Caracteristicas.Salud.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Salud.ToString().PadRight(anchoColumna)}\n");
     }
 
     public void MostrarTablaDeCombos(Personaje pj1)

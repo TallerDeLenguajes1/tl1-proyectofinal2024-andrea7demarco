@@ -1,5 +1,4 @@
-﻿
-const string ArchivoPersonajes = "Data/Personajes.json";
+﻿const string ArchivoPersonajes = "Data/Personajes.json";
 const string ArchivoGanador = "Data/Ganador.json";
 
 FabricaPersonajesService fabricaPersonajesService = new();
