@@ -161,7 +161,7 @@ public class BatallaService
             $"Jugada intermedia [{pj1.ComboAtaques.Intermedio}]\n" +
             $"Jugada avanzada [{pj1.ComboAtaques.Avanzado}]\n" +
             $"Jugada fatality [{pj1.ComboAtaques.Fatality}]\n");
-        Thread.Sleep(3000); // se muestra 3 segs
+        Thread.Sleep(4500); // se muestra 3 segs
         Console.Clear();
     }
 }

@@ -4,7 +4,7 @@ DNI : 44553408
 
 Juego de Rol por Consola en C#
 =====================================
-#Descripción
+#Descripción#
 Este es un juego de rol (RPG) por consola desarrollado en C# que utiliza la API de Rick and Morty para obtener personajes. La API está paginada y se extraen los nombres, las especies y los IDs de los personajes. El jugador elige un personaje con el cual realizar la batalla (Jugador 1), mientras que la computadora juega con un personaje aleatorio (Jugador 2).
 
 Durante el combate, el jugador puede realizar movimientos de distintos niveles: básicos, intermedios, avanzados y un movimiento especial llamado "fatality". Estos movimientos especiales, llamados "combo ataques" en el proyecto, tienen diferentes longitudes de cadenas de texto, siendo más difícil ejecutar la "fatality" debido a su longitud. Para ejecutar estos movimientos avanzados, el jugador debe ingresar correctamente una clave específica. Si la clave es correcta, se aplicará un multiplicador de daño; de lo contrario, se realizará un ataque estándar. La computadora (Jugador 2) solo puede realizar ataques estándar.
