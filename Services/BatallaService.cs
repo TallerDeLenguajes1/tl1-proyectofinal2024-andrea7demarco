@@ -1,3 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Threading;
+using Colorful;
+using SysConsole = System.Console;
+
 public class BatallaService
 {
     private readonly FabricaPersonajesService fabricaPersonajes;
@@ -19,7 +27,7 @@ public class BatallaService
         Personaje peleador1 = personajeElegido;
         Personaje peleador2;
 
-        //para q no se repitan
+        // Para que no se repitan
         do
         {
             peleador2 = SeleccionarPeleadorAleatorio(personajes);
@@ -59,19 +67,19 @@ public class BatallaService
                 };
 
                 personajesJson.GuardarGanador(ganador);
+                
 
                 return personajes;
             }
-
-            Console.Clear();
+            
+            SysConsole.Clear();
         }
+
+        
     }
 
     private static void RemoverPerdedor(Personaje perdedor, List<Personaje> personajes)
         => personajes.Remove(perdedor);
-    // {
-    //     return personajes.Remove(perdedor);
-    // }
 
     private Personaje SeleccionarPeleadorAleatorio(List<Personaje> personajes)
     {
@@ -92,10 +100,11 @@ public class BatallaService
 
     private void RealizarRonda(ref Personaje peleador1, ref Personaje peleador2, ref int contador)
     {
-        Console.WriteLine($"Ronda Numero {contador++}");
-        MostrarTablaDeCombos(peleador1);
-        Console.WriteLine("Ingresar ATAQUE: ");
-        string ataque_ingresado = Console.ReadLine() ?? string.Empty;
+        SysConsole.Clear();
+        SysConsole.WriteLine($"Ronda Numero {contador++}");
+        MostrarPorPantalla.MostrarTablaDeCombos(peleador1);
+        SysConsole.WriteLine("Ingresar ATAQUE: ");
+        string ataque_ingresado = SysConsole.ReadLine() ?? string.Empty;
 
         Dictionary<string, decimal> potenciadorAtaques = new()
         {
@@ -109,9 +118,9 @@ public class BatallaService
 
         if (potenciadorAtaques.TryGetValue(ataque_ingresado, out potenciador))
         {
-            Console.WriteLine("Coinciden.");
-            Console.ReadKey();
-            Console.Clear();
+            SysConsole.WriteLine("Coinciden.");
+            SysConsole.ReadKey();
+            SysConsole.Clear();
         }
 
         decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad, potenciador);
@@ -124,8 +133,8 @@ public class BatallaService
             ? peleador1.Caracteristicas.Salud = 0
             : peleador1.Caracteristicas.Salud - daño2;
 
-        MostrarDatos(peleador1, peleador2);
-        Console.ReadKey();
+        MostrarPorPantalla.MostrarDatos(peleador1, peleador2);
+        SysConsole.ReadKey();
     }
 
     private static void AumentarNivelDelGanador(Personaje pj)
@@ -135,33 +144,7 @@ public class BatallaService
         pj.Caracteristicas.Nivel++;
     }
 
-    private static void MostrarDatos(Personaje pj1, Personaje pj2)
-    {
-        // Define el ancho de las columnas
-        int anchoColumna = 30;
+ 
 
-        // Usa PadRight para alinear a la izquierda el primer personaje y PadLeft para alinear a la derecha el segundo personaje
-        Console.WriteLine(
-            $"{"Atributos".PadRight(anchoColumna)}{"Personaje 1".PadRight(anchoColumna)}{"Personaje 2".PadRight(anchoColumna)}\n" +
-            $"{"Nombre".PadRight(anchoColumna)}{pj1.Datos.Nombre.PadRight(anchoColumna)}{pj2.Datos.Nombre.PadRight(anchoColumna)}\n" +
-            $"{"Tipo".PadRight(anchoColumna)}{pj1.Datos.Tipo.PadRight(anchoColumna)}{pj2.Datos.Tipo.PadRight(anchoColumna)}\n" +
-            $"{"Velocidad".PadRight(anchoColumna)}{pj1.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna)}\n" +
-            $"{"Nivel".PadRight(anchoColumna)}{pj1.Caracteristicas.Nivel.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Nivel.ToString().PadRight(anchoColumna)}\n" +
-            $"{"Fuerza".PadRight(anchoColumna)}{pj1.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna)}\n" +
-            $"{"Salud".PadRight(anchoColumna)}{pj1.Caracteristicas.Salud.ToString().PadRight(anchoColumna)}{pj2.Caracteristicas.Salud.ToString().PadRight(anchoColumna)}\n");
-    }
 
-    public void MostrarTablaDeCombos(Personaje pj1)
-    {
-        Console.WriteLine("Esto se mostrara por unos segundos...");
-
-        Console.WriteLine(
-            "TABLA DE JUGADAS:\n" +
-            $"Jugada basica [{pj1.ComboAtaques.Basico}]\n" +
-            $"Jugada intermedia [{pj1.ComboAtaques.Intermedio}]\n" +
-            $"Jugada avanzada [{pj1.ComboAtaques.Avanzado}]\n" +
-            $"Jugada fatality [{pj1.ComboAtaques.Fatality}]\n");
-        Thread.Sleep(4500); // se muestra 3 segs
-        Console.Clear();
-    }
 }

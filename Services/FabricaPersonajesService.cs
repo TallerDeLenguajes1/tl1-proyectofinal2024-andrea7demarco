@@ -93,7 +93,7 @@ public class FabricaPersonajesService
 
     private string GeneradorClavesAleatoria(int longitud)
     {
-        const string letras = "abcdefghijklmnopqrstuvwxyz";
+        const string letras = "0123456789";
         var clave = new char[longitud];
 
         for (int i = 0; i < longitud; i++)
