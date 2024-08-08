@@ -19,7 +19,7 @@ public class ApiQueryService
             // if(!response.IsSuccessStatusCode)
             //     throw new Exception("Ocurrio un error al intentar consultar la API para obtener los personajes");
             response.EnsureSuccessStatusCode();
-            //awai importante porque la solicitud es asincrónica
+            //await importante porque la solicitud es asincrónica
             var json = await response.Content.ReadAsStringAsync();
             var listadoPersonajes = JsonSerializer.Deserialize<RespuestaPersonajes>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 

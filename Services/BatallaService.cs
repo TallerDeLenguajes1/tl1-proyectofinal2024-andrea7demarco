@@ -106,6 +106,7 @@ public class BatallaService
         SysConsole.WriteLine("Ingresar ATAQUE: ");
         string ataque_ingresado = SysConsole.ReadLine() ?? string.Empty;
 
+#pragma warning disable CS8604 // Posible argumento de referencia nulo
         Dictionary<string, decimal> potenciadorAtaques = new()
         {
             {peleador1.ComboAtaques.Basico, 0.05m },
@@ -113,12 +114,13 @@ public class BatallaService
             {peleador1.ComboAtaques.Avanzado, 0.30m },
             {peleador1.ComboAtaques.Fatality, 0.90m }
         };
+#pragma warning restore CS8604 // Posible argumento de referencia nulo
 
         decimal potenciador = 0m;
 
         if (potenciadorAtaques.TryGetValue(ataque_ingresado, out potenciador))
         {
-            SysConsole.WriteLine("Coinciden.");
+            SysConsole.WriteLine("Ataque ingresado correctamente.");
             SysConsole.ReadKey();
             SysConsole.Clear();
         }
@@ -134,6 +136,7 @@ public class BatallaService
             : peleador1.Caracteristicas.Salud - daño2;
 
         MostrarPorPantalla.MostrarDatos(peleador1, peleador2);
+        fabricaPersonajes.ResetearCombosDeAtaqueEnRonda(peleador1);
         SysConsole.ReadKey();
     }
 

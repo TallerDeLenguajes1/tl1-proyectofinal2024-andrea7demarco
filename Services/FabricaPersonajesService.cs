@@ -41,12 +41,20 @@ public class FabricaPersonajesService
         return personajes;
     }
 
+// crea la lista Personaje con sus combos y también se utiliza cuando reseteo la partida para volver
+// a cargar los datos 
     public void ResetearCombosAtaques(List<Personaje> personajes)
     {
         foreach (Personaje personaje in personajes)
         {
             personaje.ComboAtaques = GenerarComboAtaques();
         }
+    }
+
+//resetea los combos de ronda en ronda
+    public void ResetearCombosDeAtaqueEnRonda(Personaje personajes)
+    {
+        personajes.ComboAtaques = GenerarComboAtaques();
     }
 
     public int GenerarRandom(int a, int b) => _random.Next(a, b);
@@ -104,14 +112,14 @@ public class FabricaPersonajesService
         return new string(clave); //paso de arreglo a string
     }
 
-    private ComboAtaques GenerarComboAtaques()
-    {
+    public ComboAtaques GenerarComboAtaques()
+    {   //todos van a tener un multiplicador MENOS la fatality, que va a sacar mucha más vida
         return new ComboAtaques
         {
-            Basico = GeneradorClavesAleatoria(5),
-            Intermedio = GeneradorClavesAleatoria(6),
-            Avanzado = GeneradorClavesAleatoria(10),
-            Fatality = GeneradorClavesAleatoria(10)
+            Basico = GeneradorClavesAleatoria(4),
+            Intermedio = GeneradorClavesAleatoria(5),
+            Avanzado = GeneradorClavesAleatoria(6),
+            Fatality = GeneradorClavesAleatoria(7)
         };
     }
 }

@@ -7,6 +7,11 @@ using Colorful;
 using SysConsole = System.Console;
 public class MostrarPorPantalla
 {
+    //introduccion
+    public static void MostrarIntroduccion()
+    {
+        SysConsole.WriteLine("¡Bienvenido a Rick and Morty! Enfréntate a una crisis interdimensional mientras exploras universos absurdos tu misión es restaurar el equilibrio del multiverso y pelear con criaturas bizarras");
+    }
     // Definición de métodos
     public static void MostrarPersonajes(List<Personaje> personajes)
     {
@@ -27,7 +32,7 @@ public class MostrarPorPantalla
     public static void MostrarTablaDeCombos(Personaje pj1)
     {
         SysConsole.WriteLine("La tabla siempre se mostrara por unos segundos...");
-        Thread.Sleep(4000);
+        Thread.Sleep(4000); //aviso con tiempo
         SysConsole.Clear();
         
         // Crear los encabezados de columnas
