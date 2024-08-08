@@ -3,7 +3,7 @@ public class PersonajesJsonService
 {
     private const string ArchivoPersonajes = "Data/Personajes.json";
     private const string ArchivoGanador = "Data/Ganador.json";
-
+    private const string ArchivoHistorial = "Data/Historial.json";
     public void GuardarPersonajes(List<Personaje> personaje)
     {
         //serializo - convierto la lista personajes a una cadena json
@@ -19,6 +19,7 @@ public class PersonajesJsonService
         //escribo en un archivo .json
         File.WriteAllText(ArchivoGanador, json);
     }
+
 
     public List<Personaje> LeerPersonajes()
     {
