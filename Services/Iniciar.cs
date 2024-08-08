@@ -2,6 +2,7 @@ public class App
 {
     private const string ArchivoPersonajes = "Data/Personajes.json";
     private const string ArchivoGanador = "Data/Ganador.json";
+    private const string ArchivoHistorial = "Data/Historial.json";
 
     private FabricaPersonajesService fabricaPersonajesService = new();
     private PersonajesJsonService personajesJsonService = new();
@@ -50,8 +51,43 @@ public class App
         comenzar = Ingresos.LeerEntradaEntera("Comenzar pelea Si[1] - No[0]", 1, 0);
         return comenzar == 1;
     }
+//controla que el nuevo personaje elegido no es el mismo que ganó en la 
+//partida anterior 
+private void ProcesarPelea()
+{  
+    // Verifica si el historial de ganadores existe y si el personaje elegido es el mismo que el último ganador en el historial.
+    if ((personajesJsonService.Existe(ArchivoHistorial) && personajesJsonService.LeerHistorial().Any(g => g.Personaje?.Datos.Id == personajeElegido?.Datos.Id))
+        || personajeElegido == null)
+    {   
+        personajeElegido = ElegirPersonaje();
+    }
 
-    private void ProcesarPelea()
+    List<Personaje> listaActualizada;
+    try
+    {
+        listaActualizada = batallaService.IniciarPelea(personajesList, personajeElegido);
+
+        // Guarda la lista actualizada de personajes.
+        personajesJsonService.GuardarPersonajes(listaActualizada);
+
+        // Guarda el ganador en el historial.
+        GanadoresHistorial ganador= new()
+        {
+            Personaje = personajeElegido, // Aquí asumes que `personajeElegido` es el ganador
+            Name = Usuario.Nombre, // Aquí asumes que `Usuario.Nombre` es el nombre del usuario
+        };
+
+        personajesJsonService.GuardarHistorial(ganador);
+    }
+    catch (ArgumentException)
+    {
+        // Si ocurre una excepción, carga nuevos personajes.
+        CargarNuevosPersonajes();
+        return; // Regresa al inicio del bucle.
+    }
+}
+
+/* private void ProcesarPelea() 
     {
         if ((personajesJsonService.Existe(ArchivoGanador) && personajesJsonService.LeerGanador()?.Personaje?.Datos.Id != personajeElegido?.Datos.Id)
             || personajeElegido == null)
@@ -71,7 +107,7 @@ public class App
             return; // Volver al inicio del while
         }
     }
-
+*/
     private void SolicitarNuevaPelea()
     {
         comenzar = Ingresos.LeerEntradaEntera("¿Quiere iniciar una nueva pelea? SI[1] - NO[0]", 1, 0);

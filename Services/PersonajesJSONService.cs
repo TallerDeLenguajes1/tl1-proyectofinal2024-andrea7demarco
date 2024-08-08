@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json;
 public class PersonajesJsonService
 {
@@ -12,35 +13,15 @@ public class PersonajesJsonService
         File.WriteAllText(ArchivoPersonajes, json);
     }
 
-    public void GuardarGanador(Ganador ganador)
-    {
-        //serializo - convierto la lista personajes a una cadena json
-        string json = JsonSerializer.Serialize(ganador);
-        //escribo en un archivo .json
-        File.WriteAllText(ArchivoGanador, json);
-    }
-
-
     public List<Personaje> LeerPersonajes()
     {
         //deserealizo - lee un json y lo pasa a una lista de obj personajes
         string json = File.ReadAllText(ArchivoPersonajes);
-        List<Personaje>? personajesDeserealizados = JsonSerializer.Deserialize<List<Personaje>>(json) 
+        List<Personaje>? personajesDeserealizados = JsonSerializer.Deserialize<List<Personaje>>(json)
             ?? throw new Exception("No se pudo leer el archivo JSON");
-            
+
         return personajesDeserealizados;
     }
-
-    public Ganador LeerGanador()
-    {
-        //deserealizo - lee un json y lo pasa a una lista de obj personajes
-        string json = File.ReadAllText(ArchivoGanador);
-        Ganador ganadorDeserealizado = JsonSerializer.Deserialize<Ganador>(json) 
-            ?? throw new Exception("No se pudo leer el archivo JSON");
-            
-        return ganadorDeserealizado;
-    }
-     
     public bool Existe(string nombreArchivo)
     {
         //verifico que existe el archivo
@@ -52,6 +33,40 @@ public class PersonajesJsonService
         if (Existe(nombreArchivo))
         {
             File.Delete(nombreArchivo);
+        }
+    }
+
+    //historial
+
+    public void GuardarHistorial(GanadoresHistorial ganador)
+    {
+        List<GanadoresHistorial> historial = LeerHistorial();
+        historial.Add(ganador);
+
+        // Serializa la lista completa de ganadores al archivo
+        string json = JsonSerializer.Serialize(historial, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
+        File.WriteAllText(ArchivoHistorial, json);
+    }
+    public List<GanadoresHistorial> LeerHistorial()
+    {
+        if (!File.Exists(ArchivoHistorial))
+            return new List<GanadoresHistorial>();
+
+        string json = File.ReadAllText(ArchivoHistorial);
+        if (string.IsNullOrEmpty(json))
+            return new List<GanadoresHistorial>();
+
+        try
+        {
+            return JsonSerializer.Deserialize<List<GanadoresHistorial>>(json) ?? new List<GanadoresHistorial>();
+        }
+        catch (JsonException)
+        {
+            // Manejo de errores si el JSON está malformado
+            return new List<GanadoresHistorial>();
         }
     }
 }

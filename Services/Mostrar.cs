@@ -13,6 +13,13 @@ public class MostrarPorPantalla
         SysConsole.WriteLine("¡Bienvenido a Rick and Morty! Enfréntate a una crisis interdimensional mientras exploras universos absurdos tu misión es restaurar el equilibrio del multiverso y pelear con criaturas bizarras");
     }
     // Definición de métodos
+
+    public static void MostrarGanador(GanadoresHistorial pj)
+    {
+        SysConsole.WriteLine("Ganador:");
+        SysConsole.WriteLine($"Usuario: {pj.Name}\n" +
+        $"Nombre: {pj.Personaje?.Datos.Nombre}\n");
+    }
     public static void MostrarPersonajes(List<Personaje> personajes)
     {
         SysConsole.WriteLine("PERSONAJES: ");
@@ -32,7 +39,7 @@ public class MostrarPorPantalla
     public static void MostrarTablaDeCombos(Personaje pj1)
     {
         SysConsole.WriteLine("La tabla siempre se mostrara por unos segundos...");
-        Thread.Sleep(4000); //aviso con tiempo
+        Thread.Sleep(1000); //aviso con tiempo
         SysConsole.Clear();
         
         // Crear los encabezados de columnas
@@ -55,7 +62,7 @@ public class MostrarPorPantalla
         Colorful.Console.WriteLine(filaAvanzado, colorAmarillo);
         Colorful.Console.WriteLine(filaFatality, colorAmarillo);
 
-        Thread.Sleep(4500); // se muestra 4.5 segs
+        Thread.Sleep(1000); // se muestra 4.5 segs
         SysConsole.Clear();
     }
 
@@ -63,7 +70,7 @@ public class MostrarPorPantalla
     {
         // Definir el ancho de las columnas
         int anchoColumna = 32;
-
+        
         // Crear los encabezados de columnas
         string encabezado = $"{"Atributos".PadRight(anchoColumna)}{"PERSONAJE 1".PadRight(anchoColumna)}{"PERSONAJE 2".PadRight(anchoColumna)}";
         string separador = new string('-', encabezado.Length);

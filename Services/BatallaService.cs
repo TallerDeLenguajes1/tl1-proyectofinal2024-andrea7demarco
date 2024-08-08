@@ -11,73 +11,6 @@ public class BatallaService
     private readonly FabricaPersonajesService fabricaPersonajes;
     private readonly PersonajesJsonService personajesJson;
 
-    public BatallaService()
-    {
-        personajesJson = new PersonajesJsonService();
-        fabricaPersonajes = new FabricaPersonajesService();
-    }
-
-    public List<Personaje> IniciarPelea(List<Personaje> personajes, Personaje personajeElegido)
-    {
-        if (personajes == null || personajes.Count < 2)
-        {
-            throw new ArgumentException("Debe haber al menos dos personajes para iniciar una pelea.");
-        }
-
-        Personaje peleador1 = personajeElegido;
-        Personaje peleador2;
-
-        // Para que no se repitan
-        do
-        {
-            peleador2 = SeleccionarPeleadorAleatorio(personajes);
-        } while (peleador1.Datos.Nombre == peleador2.Datos.Nombre);
-
-        int contador = 1;
-
-        while (true)
-        {
-            RealizarRonda(ref peleador1, ref peleador2, ref contador);
-
-            if (peleador1.Caracteristicas.Salud <= 0)
-            {
-                AumentarNivelDelGanador(peleador2);
-                RemoverPerdedor(peleador1, personajes);
-
-                Ganador ganador = new()
-                {
-                    Personaje = peleador2,
-                    Nombre = "Computadora",
-                };
-
-                personajesJson.GuardarGanador(ganador);
-
-                return personajes;
-            }
-
-            if (peleador2.Caracteristicas.Salud <= 0)
-            {
-                AumentarNivelDelGanador(peleador1);
-                RemoverPerdedor(peleador2, personajes);
-
-                Ganador ganador = new()
-                {
-                    Personaje = peleador1,
-                    Nombre = Usuario.Nombre,
-                };
-
-                personajesJson.GuardarGanador(ganador);
-                
-
-                return personajes;
-            }
-            
-            SysConsole.Clear();
-        }
-
-        
-    }
-
     private static void RemoverPerdedor(Personaje perdedor, List<Personaje> personajes)
         => personajes.Remove(perdedor);
 
@@ -147,7 +80,68 @@ public class BatallaService
         pj.Caracteristicas.Nivel++;
     }
 
- 
+    public BatallaService()
+    {
+        personajesJson = new PersonajesJsonService();
+        fabricaPersonajes = new FabricaPersonajesService();
+    }
 
+    public List<Personaje> IniciarPelea(List<Personaje> personajes, Personaje personajeElegido)
+    {  
+        if (personajes == null || personajes.Count < 2)
+        {
+            throw new ArgumentException("Debe haber al menos dos personajes para iniciar una pelea.");
+        }
 
+        Personaje peleador1 = personajeElegido;
+        Personaje peleador2;
+
+        // Para que no se repitan
+        do
+        {
+            peleador2 = SeleccionarPeleadorAleatorio(personajes);
+        } while (peleador1.Datos.Nombre == peleador2.Datos.Nombre);
+
+        int contador = 1;
+
+        while (true)
+        {
+            RealizarRonda(ref peleador1, ref peleador2, ref contador);
+
+            if (peleador1.Caracteristicas.Salud <= 0)
+            {
+                AumentarNivelDelGanador(peleador2);
+                
+                RemoverPerdedor(peleador1, personajes);
+
+                GanadoresHistorial ganador = new()
+                {
+                    Personaje = peleador2,
+                    Name = "Computadora",
+
+                };
+                personajesJson.GuardarHistorial(ganador);
+                MostrarPorPantalla.MostrarGanador(ganador);
+
+                return personajes;
+            }
+
+            if (peleador2.Caracteristicas.Salud <= 0)
+            {
+                AumentarNivelDelGanador(peleador1);
+                RemoverPerdedor(peleador2, personajes);
+
+                GanadoresHistorial ganador = new()
+                {
+                    Personaje = peleador1,
+                    Name = Usuario.Nombre,
+                };
+
+                 personajesJson.GuardarHistorial(ganador);
+                 MostrarPorPantalla.MostrarGanador(ganador);
+                return personajes;
+            }   
+            SysConsole.Clear();
+        }
+    }
 }

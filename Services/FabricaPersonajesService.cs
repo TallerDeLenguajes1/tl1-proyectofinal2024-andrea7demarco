@@ -1,7 +1,7 @@
 public class FabricaPersonajesService
 {
     private readonly Random _random;
-    private const int NumeroPersonajesSeleccionados = 15;
+    private const int NumeroPersonajesSeleccionados = 10;
 
     public FabricaPersonajesService()
     {
