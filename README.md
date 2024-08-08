@@ -1,5 +1,5 @@
 Alumna : De Marco, Andrea Sofía
-DNI : 44553408
+
 ##Proyecto final de Taller de Lenguajes I - RPG 2024#
 
 Juego de Rol por Consola en C#
