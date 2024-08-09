@@ -37,6 +37,7 @@ public class MostrarPorPantalla
             $"Velocidad : {pj.Caracteristicas.Velocidad}\n" +
             $"Nivel : {pj.Caracteristicas.Nivel}\n" +
             $"Fuerza : {pj.Caracteristicas.Fuerza}\n" +
+            $"Armadura : {pj.Caracteristicas.Armadura}\n"+
             $"Salud : {pj.Caracteristicas.Salud}\n" +
             $"Edad : {pj.Datos.Edad} \n");
         }
@@ -89,6 +90,7 @@ public class MostrarPorPantalla
         string filaVelocidad = $"{ "Velocidad".PadRight(anchoColumna) }{ pj1.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna) }{ pj2.Caracteristicas.Velocidad.ToString().PadRight(anchoColumna) }";
         string filaNivel = $"{ "Nivel".PadRight(anchoColumna) }{ pj1.Caracteristicas.Nivel.ToString().PadRight(anchoColumna) }{ pj2.Caracteristicas.Nivel.ToString().PadRight(anchoColumna) }";
         string filaFuerza = $"{ "Fuerza".PadRight(anchoColumna) }{ pj1.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna) }{ pj2.Caracteristicas.Fuerza.ToString().PadRight(anchoColumna) }";
+        string filaArmadura = $"{ "Armadura".PadRight(anchoColumna) }{ pj1.Caracteristicas.Armadura.ToString().PadRight(anchoColumna) }{ pj2.Caracteristicas.Armadura.ToString().PadRight(anchoColumna) }";
         string filaSalud = $"{ "Salud".PadRight(anchoColumna) }{ pj1.Caracteristicas.Salud.ToString().PadRight(anchoColumna) }{ pj2.Caracteristicas.Salud.ToString().PadRight(anchoColumna) }";
 
         // Mostrar la tabla de datos con color verde claro
