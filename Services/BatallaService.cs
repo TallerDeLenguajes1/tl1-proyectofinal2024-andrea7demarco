@@ -31,7 +31,7 @@ public class BatallaService
         return daño * (potenciador + 1);
     }
 
-    private void RealizarRonda(ref Personaje peleador1, ref Personaje peleador2, ref int contador)
+    private void RealizarRonda(Personaje peleador1, Personaje peleador2, int contador)
     {
         SysConsole.Clear();
         SysConsole.WriteLine($"Ronda Numero {contador++}");
@@ -107,7 +107,7 @@ public class BatallaService
 
         while (true)
         {
-            RealizarRonda(ref peleador1, ref peleador2, ref contador);
+            RealizarRonda(peleador1,peleador2,contador);
 
             if (peleador1.Caracteristicas.Salud <= 0)
             {
