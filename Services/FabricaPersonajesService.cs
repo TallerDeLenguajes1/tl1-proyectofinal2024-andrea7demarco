@@ -89,7 +89,7 @@ public class FabricaPersonajesService
     {
         if (anioInicio > anioFin)
         {
-            throw new ArgumentException("The start year must be less than or equal to the end year.");
+            throw new ArgumentException("Colocar bien los años\n");
         }
 
         int year = GenerarRandom(anioInicio, anioFin + 1);

@@ -1,9 +1,8 @@
-using System.ComponentModel;
+
 using System.Text.Json;
 public class PersonajesJsonService
 {
     private const string ArchivoPersonajes = "Data/Personajes.json";
-    private const string ArchivoGanador = "Data/Ganador.json";
     private const string ArchivoHistorial = "Data/Historial.json";
     public void GuardarPersonajes(List<Personaje> personaje)
     {
@@ -46,7 +45,7 @@ public class PersonajesJsonService
         // Serializa la lista completa de ganadores al archivo
         string json = JsonSerializer.Serialize(historial, new JsonSerializerOptions
         {
-            WriteIndented = true
+            WriteIndented = true //mas formateado + facil de leer
         });
         File.WriteAllText(ArchivoHistorial, json);
     }

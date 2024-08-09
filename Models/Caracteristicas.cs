@@ -1,27 +1,9 @@
 public class Caracteristicas
 {
-    private int velocidad;
-    private int destreza;
-    private int fuerza;
-    private int nivel;
-    private int armadura;
-    private decimal salud;
-
-    public int Velocidad
-    { get => velocidad; set => velocidad = value; }
-
-    public int Destreza
-    { get => destreza; set => destreza = value; }
-
-    public int Fuerza
-    { get => fuerza; set => fuerza = value; }
-
-    public int Nivel
-    { get => nivel; set => nivel = value; }
-
-    public int Armadura
-    { get => armadura; set => armadura = value; }
-
-    public decimal Salud
-    { get => salud; set => salud = value; }
+    public int Velocidad {get; set ;}
+    public int Destreza {get; set ;}
+    public int Fuerza {get; set ;} 
+    public int Nivel {get; set ;}
+    public int Armadura {get; set ;}
+    public decimal Salud {get; set ;}
 }

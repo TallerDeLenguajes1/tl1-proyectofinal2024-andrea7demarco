@@ -1,4 +1,4 @@
-public class Ingresos
+public class ControlEntrada
 {
     
     public static int LeerEntradaEntera(string mensaje, int opcion1, int opcion2)

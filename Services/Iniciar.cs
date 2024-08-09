@@ -1,17 +1,17 @@
+using System.Runtime.CompilerServices;
+
 public class App
 {
     private const string ArchivoPersonajes = "Data/Personajes.json";
-    private const string ArchivoGanador = "Data/Ganador.json";
     private const string ArchivoHistorial = "Data/Historial.json";
-
     private FabricaPersonajesService fabricaPersonajesService = new();
     private PersonajesJsonService personajesJsonService = new();
     private BatallaService batallaService = new();
-
     private List<Personaje> personajesList = new();
     private Personaje? personajeElegido = null;
     private int? comenzar = null;
     private int resetear = 100;
+    private int verHistorial = 100;
 
     public void Iniciar()
     {
@@ -41,18 +41,14 @@ public class App
         Console.WriteLine("Escribe tu nombre: ");
         Usuario.Nombre = Console.ReadLine();
         MostrarPorPantalla.MostrarPersonajes(personajesList);
-
-        if (personajesJsonService.Existe(ArchivoGanador))
-            personajesJsonService.BorrarArchivo(ArchivoGanador);
     }
 
     private bool SolicitarComienzoPelea()
     {
-        comenzar = Ingresos.LeerEntradaEntera("Comenzar pelea Si[1] - No[0]", 1, 0);
+        comenzar = ControlEntrada.LeerEntradaEntera("Comenzar pelea Si[1] - No[0]", 1, 0);
         return comenzar == 1;
     }
-//controla que el nuevo personaje elegido no es el mismo que ganó en la 
-//partida anterior 
+ 
 private void ProcesarPelea()
 {  
     // Verifica si el historial de ganadores existe y si el personaje elegido es el mismo que el último ganador en el historial.
@@ -63,21 +59,14 @@ private void ProcesarPelea()
     }
 
     List<Personaje> listaActualizada;
-    try
-    {
+    try //manejo excpeciones
+    {   //se inicia la pelea entre los pjs de PersonajesList y el PersonajeElegido
         listaActualizada = batallaService.IniciarPelea(personajesList, personajeElegido);
 
         // Guarda la lista actualizada de personajes.
         personajesJsonService.GuardarPersonajes(listaActualizada);
+     
 
-        // Guarda el ganador en el historial.
-        GanadoresHistorial ganador= new()
-        {
-            Personaje = personajeElegido, // Aquí asumes que `personajeElegido` es el ganador
-            Name = Usuario.Nombre, // Aquí asumes que `Usuario.Nombre` es el nombre del usuario
-        };
-
-        personajesJsonService.GuardarHistorial(ganador);
     }
     catch (ArgumentException)
     {
@@ -87,30 +76,9 @@ private void ProcesarPelea()
     }
 }
 
-/* private void ProcesarPelea() 
-    {
-        if ((personajesJsonService.Existe(ArchivoGanador) && personajesJsonService.LeerGanador()?.Personaje?.Datos.Id != personajeElegido?.Datos.Id)
-            || personajeElegido == null)
-        {
-            personajeElegido = ElegirPersonaje();
-        }
-
-        List<Personaje> listaActualizada;
-        try
-        {
-            listaActualizada = batallaService.IniciarPelea(personajesList, personajeElegido);
-            personajesJsonService.GuardarPersonajes(listaActualizada);
-        }
-        catch (ArgumentException)
-        {
-            CargarNuevosPersonajes();
-            return; // Volver al inicio del while
-        }
-    }
-*/
     private void SolicitarNuevaPelea()
     {
-        comenzar = Ingresos.LeerEntradaEntera("¿Quiere iniciar una nueva pelea? SI[1] - NO[0]", 1, 0);
+        comenzar = ControlEntrada.LeerEntradaEntera("¿Quiere iniciar una nueva pelea? SI[1] - NO[0]", 1, 0);
         
         if (comenzar == 1)
         {
@@ -124,7 +92,7 @@ private void ProcesarPelea()
 
     private void ProcesarFinalizacionPartida()
     {
-        resetear = Ingresos.LeerEntradaEntera("¿Desea borrar la partida?: Si[1] - No[0]", 1, 0);
+        resetear = ControlEntrada.LeerEntradaEntera("¿Desea borrar la partida?: Si[1] - No[0]", 1, 0);
         
         if (resetear == 1)
         {
@@ -134,6 +102,19 @@ private void ProcesarPelea()
         else
         {
             Console.WriteLine("La partida no fue eliminada");
+        }
+
+        verHistorial = ControlEntrada.LeerEntradaEntera("¿Desea ver el historial de las partidas?: Si[1] - No [0]", 1, 0);
+        if( verHistorial == 1)
+        {
+            if(personajesJsonService.Existe(ArchivoHistorial))
+            {
+                var historial = personajesJsonService.LeerHistorial();
+                MostrarPorPantalla.MostrarHistorial(historial);
+            }
+        } else
+        {
+            Console.WriteLine("okey.");
         }
     }
 
@@ -147,7 +128,7 @@ private void ProcesarPelea()
             var entrada = Console.ReadLine();
 
             if (int.TryParse(entrada, out personaje_id))
-            {
+            {   //linq ...controla q esté en la lista
                 personajeElegido = personajesList.Find(p => p.Datos.Id == personaje_id);
                 if (personajeElegido != null)
                 {

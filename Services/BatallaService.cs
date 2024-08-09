@@ -39,15 +39,14 @@ public class BatallaService
         SysConsole.WriteLine("Ingresar ATAQUE: ");
         string ataque_ingresado = SysConsole.ReadLine() ?? string.Empty;
 
-#pragma warning disable CS8604 // Posible argumento de referencia nulo
         Dictionary<string, decimal> potenciadorAtaques = new()
         {
             {peleador1.ComboAtaques.Basico, 0.05m },
             {peleador1.ComboAtaques.Intermedio, 0.15m },
             {peleador1.ComboAtaques.Avanzado, 0.30m },
-            {peleador1.ComboAtaques.Fatality, 0.90m }
+            {peleador1.ComboAtaques.Fatality, 1.00m }
         };
-#pragma warning restore CS8604 // Posible argumento de referencia nulo
+
 
         decimal potenciador = 0m;
 
@@ -57,6 +56,8 @@ public class BatallaService
             SysConsole.ReadKey();
             SysConsole.Clear();
         }
+
+        
 
         decimal daño1 = CalcularDañoAtaque(peleador1, peleador2.Caracteristicas.Velocidad, potenciador);
         peleador2.Caracteristicas.Salud = peleador2.Caracteristicas.Salud - daño1 < 0

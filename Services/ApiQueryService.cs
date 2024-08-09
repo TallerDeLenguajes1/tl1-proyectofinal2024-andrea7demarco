@@ -2,12 +2,13 @@ using System.Text.Json;
 
 public class ApiQueryService
 {
+   // HttpClientes una clase que permite enviar solicitudes HTTP y recibir respuestas HTTP desde una URL.
     private static readonly HttpClient client = new();
     private const int CantidadPaginasAObtener = 10;
 
     public static async Task<List<PersonajeApi>> ObtenerPersonajes()
     {
-        List<PersonajeApi> personajeApis = [];
+        List<PersonajeApi> personajeApis =  new List<PersonajeApi>();
 
         // La API devuelve los datos de forma paginada. Posee 42 páginas que contienen 826 personajes en total.
         // Por una cuestión de tiempo, se decidió pedir los personajes de las primeras 10 páginas.
