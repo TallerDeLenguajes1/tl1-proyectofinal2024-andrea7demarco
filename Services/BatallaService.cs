@@ -43,13 +43,13 @@ public class BatallaService
         {
             {peleador1.ComboAtaques.Basico, 0.05m },
             {peleador1.ComboAtaques.Intermedio, 0.15m },
-            {peleador1.ComboAtaques.Avanzado, 0.30m },
+            {peleador1.ComboAtaques.Avanzado, 0.50m },
             {peleador1.ComboAtaques.Fatality, 1.00m }
         };
 
 
         decimal potenciador = 0m;
-
+//Si la clave ataque_ingresado existe en el diccionario, el método asigna el valor correspondiente a potenciador.
         if (potenciadorAtaques.TryGetValue(ataque_ingresado, out potenciador))
         {
             SysConsole.WriteLine("Ataque ingresado correctamente.");
@@ -114,7 +114,8 @@ public class BatallaService
                 AumentarNivelDelGanador(peleador2);
                 
                 RemoverPerdedor(peleador1, personajes);
-
+    //Se crea un objeto GanadoresHistorial para el ganador, se guarda en el historial se muestra en pantalla
+    //y se retorna la lista de personajes actualizada.
                 GanadoresHistorial ganador = new()
                 {
                     Personaje = peleador2,

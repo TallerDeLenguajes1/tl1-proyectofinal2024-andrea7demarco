@@ -119,7 +119,7 @@ public class FabricaPersonajesService
             Basico = GeneradorClavesAleatoria(4),
             Intermedio = GeneradorClavesAleatoria(5),
             Avanzado = GeneradorClavesAleatoria(6),
-            Fatality = GeneradorClavesAleatoria(7)
+            Fatality = "1"
         };
     }
 }
