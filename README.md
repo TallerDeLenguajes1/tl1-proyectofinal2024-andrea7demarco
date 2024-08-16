@@ -54,6 +54,15 @@ Guardado de Datos en el Archivo Local:
 
 Cada vez que se obtienen datos con éxito de la API, estos datos se guardan en el archivo personajes.json. Esto asegura que se tenga una copia local de los datos en caso de que sea necesario volver a usarlos en el futuro.
 
+Este juego incluye música para mejorar la experiencia del usuario. La reproducción y detención de la música se gestionan mediante la biblioteca NAudio. A continuación, se detalla cómo se maneja la música en el juego:
+
+Biblioteca Utilizada:
+
+El juego utiliza la biblioteca NAudio para la reproducción de archivos de audio. Esta biblioteca proporciona una manera fácil y eficiente de trabajar con audio en aplicaciones .NET.
+Archivo de Música:
+
+El archivo de música que se reproduce en el juego es Musica/themeRemix.wav. Asegúrate de que este archivo esté presente en el directorio adecuado para que la música pueda ser cargada y reproducida correctamente.
+
 #A Mejorar#
 -agregar más armas
 -lugares
